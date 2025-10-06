@@ -34,5 +34,3 @@ RUN chmod -R 775 /var/www/html/bootstrap/cache
 
 # Установка зависимостей
 RUN composer install --no-dev --optimize-autoloader
-
-php artisan migrate
