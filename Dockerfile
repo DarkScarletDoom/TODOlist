@@ -32,5 +32,16 @@ RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage
 RUN chmod -R 775 /var/www/html/bootstrap/cache
 
-# Установка зависимостей
+# Установка зависимостей Composer
 RUN composer install --no-dev --optimize-autoloader
+
+# Генерация ключа приложения
+RUN php artisan key:generate
+
+# Обновление пакетов и установка Node.js и npm
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm
+
+# Установка зависимостей npm и сборка
+RUN npm install && npm run build
