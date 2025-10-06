@@ -33,7 +33,9 @@ RUN chmod -R 775 /var/www/html/storage
 RUN chmod -R 775 /var/www/html/bootstrap/cache
 
 # Установка зависимостей Composer
-RUN composer install --no-dev --optimize-autoloader
+RUN composer i
+
+RUN cp .env.docker .env
 
 # Генерация ключа приложения
 RUN php artisan key:generate
@@ -43,5 +45,8 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     npm
 
-# Установка зависимостей npm и сборка
-RUN npm install && npm run build
+# Установка зависимостей npm
+RUN npm install
+
+# сборка
+RUN npm run build
