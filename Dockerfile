@@ -9,7 +9,9 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    libpq-dev
+    libpq-dev \
+    nodejs \
+    npm
 
 # Очистка кеша
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -31,22 +33,3 @@ RUN chown -R www-data:www-data /var/www/html/storage
 RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage
 RUN chmod -R 775 /var/www/html/bootstrap/cache
-
-# Установка зависимостей Composer
-RUN composer i
-
-RUN cp .env.docker .env
-
-# Генерация ключа приложения
-RUN php artisan key:generate
-
-# Обновление пакетов и установка Node.js и npm
-RUN apt-get update && apt-get install -y \
-    nodejs \
-    npm
-
-# Установка зависимостей npm
-RUN npm install
-
-# сборка
-RUN npm run build
